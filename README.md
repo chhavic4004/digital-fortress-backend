@@ -203,12 +203,36 @@ Analyze URLs for security threats (for browser extension).
 
 ## Deployment
 
+### Environment Variables
+
+- `FLASK_DEBUG`: Set to `true` to enable debug mode (default: `false`)
+  - **Production**: Always use the default (False) for security
+  - **Development**: Set to `true` for detailed error messages and auto-reload
+
+Example:
+```bash
+export FLASK_DEBUG=false
+python app.py
+```
+
+### Production Deployment
+
+For production environments, use a production-grade WSGI server like Gunicorn or uWSGI instead of the built-in Flask development server.
+
+**Using Gunicorn:**
+```bash
+pip install gunicorn
+gunicorn --bind 0.0.0.0:8080 --workers 4 app:app
+```
+
 ### Deploy to Render/Railway
 
 1. Push code to GitHub repository
 2. Connect repository to Render/Railway
-3. Set environment variables if needed
+3. Set environment variables:
+   - Ensure `FLASK_DEBUG` is not set or set to `false`
 4. Deploy (app runs on port 8080 by default)
+5. For production: Configure start command to use Gunicorn
 
 ### CORS Configuration
 

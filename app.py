@@ -37,6 +37,25 @@ def save_scams(scams):
         log_error(f"Error saving scams: {e}")
         return False
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        "name": "Digital Fortress Backend API",
+        "version": "1.0.0",
+        "description": "Cybersecurity platform providing Wi-Fi security, fraud detection, chatbot, scam reporting, and URL scanning.",
+        "endpoints": {
+            "health": "GET /health",
+            "stats": "GET /stats",
+            "wifi_scan": "POST /wifi_scan",
+            "detect_fraud": "POST /detect_fraud",
+            "chatbot": "POST /chatbot",
+            "add_scam": "POST /add_scam",
+            "get_scams": "GET /get_scams",
+            "url_scan": "POST /url_scan"
+        },
+        "documentation": "See README.md for detailed API documentation"
+    }), 200
+
 @app.route('/health', methods=['GET'])
 def health():
     log_info("Health check requested")
@@ -370,5 +389,6 @@ if __name__ == '__main__':
         save_scams([])
         log_info(f"Created {SCAMS_FILE}")
     
-    log_info("Digital Fortress Backend Starting on port 8080...")
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    log_info(f"Digital Fortress Backend Starting on port 8080 (Debug: {debug_mode})...")
+    app.run(host='0.0.0.0', port=8080, debug=debug_mode)
