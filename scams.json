@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "user": "Rajesh Kumar",
+    "message": "Received a call claiming to be from my bank asking for my debit card CVV and OTP. Almost fell for it!",
+    "category": "Banking Scam",
+    "source": "Call",
+    "date": "2025-10-28"
+  },
+  {
+    "id": 2,
+    "user": "Priya Sharma",
+    "message": "Got an email saying I won a lottery I never entered. They asked for advance payment to claim the prize.",
+    "category": "Lottery Scam",
+    "source": "Email",
+    "date": "2025-10-29"
+  },
+  {
+    "id": 3,
+    "user": "Amit Patel",
+    "message": "Fake job offer promising high salary. They asked for money upfront for training materials.",
+    "category": "Job Scam",
+    "source": "Email",
+    "date": "2025-10-30"
+  }
+]
