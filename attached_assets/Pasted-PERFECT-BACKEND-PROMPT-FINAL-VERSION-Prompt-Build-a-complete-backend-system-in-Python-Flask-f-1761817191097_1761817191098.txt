@@ -1,0 +1,212 @@
+PERFECT BACKEND PROMPT (FINAL VERSION)
+
+Prompt:
+
+Build a complete backend system in Python (Flask) for a cybersecurity platform named Digital Fortress.
+
+The backend should handle all security-related operations for:
+Wi-Defend (Public Wi-Fi Protector), Fraud Message / Call Detector, AI Cyber Guardian Chatbot, Community Storyboard, Scam Database, and Browser Extension protection system.
+
+The backend must be modular, secure, and production-ready. It should provide REST APIs for all these features and be easy to connect with a React + Vite + Tailwind + shadcn-ui frontend deployed on Vercel.
+
+🧱 1. Setup
+
+Use Flask + Flask-CORS.
+
+Folder structure:
+
+/backend
+  ├── app.py
+  ├── requirements.txt
+  ├── scams.json
+  ├── utils/
+  ├── models/
+  └── data/
+
+
+Include requirements.txt with all dependencies.
+
+Default port: 8080.
+
+🧩 2. Core API Endpoints
+(a) /wifi_scan — Wi-Defend (Public Wi-Fi Protector)
+
+Method: POST
+
+Input: { "ssid": "Cafe_Free_WiFi", "encryption": "OPEN", "dns": "8.8.8.8", "activity": "bank_login" }
+
+Output:
+
+{
+  "ssid": "Cafe_Free_WiFi",
+  "risk_score": 85,
+  "risk_level": "High",
+  "message": "Sensitive data like banking details can be intercepted on public Wi-Fi. Use a VPN or mobile data instead."
+}
+
+
+Logic:
+
+Evaluate encryption type, DNS safety, and user activity.
+
+Add Data-Exposure Awareness warning if unsafe Wi-Fi is used for login/payment activity.
+
+(b) /detect_fraud — Fraud Message / Call Detector
+
+Method: POST
+
+Input: { "text": "Your KYC is expiring. Click here to update." }
+
+Output:
+
+{
+  "fraud_score": 92,
+  "risk_level": "High",
+  "risky_keywords": ["KYC", "click here"],
+  "advice": "Likely phishing attempt. Do not click unknown links."
+}
+
+
+Logic:
+
+Use keyword detection (“OTP”, “KYC”, “urgent”, “bank”, etc.).
+
+Assign a risk score and detect phishing/fraud patterns.
+
+Later, support ML model loading from /models/fraud_model.pkl.
+
+(c) /chatbot — AI Cyber Guardian
+
+Method: POST
+
+Input: { "query": "How do I protect my WhatsApp from hacking?" }
+
+Output:
+
+{
+  "response": "Enable two-step verification on WhatsApp and never share verification codes."
+}
+
+
+Logic:
+
+Rule-based responses now (fraud, Wi-Fi, phishing, scams).
+
+Expandable to NLP model (spaCy or OpenAI API).
+
+(d) /add_scam — Community Storyboard (Add Post)
+
+Method: POST
+
+Input: { "user": "Amit", "message": "I got a fake job offer on email.", "category": "Job Scam", "date": "2025-10-30" }
+
+Action: Save this data to scams.json.
+
+Output: { "message": "Scam report added successfully" }
+
+Auto-generate ID for each report.
+
+(e) /get_scams — Scam Database
+
+Method: GET
+
+Output:
+
+[
+  {"id":1,"user":"Amit","category":"Job Scam","message":"Fake job offer","date":"2025-10-30"}
+]
+
+
+Fetch all scam reports.
+
+Add optional query filters: /get_scams?category=Bank
+
+(f) /url_scan — Browser Extension Protection
+
+Method: POST
+
+Input: { "url": "https://bank-verification-kyc.net" }
+
+Output:
+
+{
+  "url": "https://bank-verification-kyc.net",
+  "safe": false,
+  "reason": "Domain suspicious: contains 'kyc', not official banking domain",
+  "risk_score": 88
+}
+
+
+Logic:
+
+Parse and analyze domain name.
+
+Flag suspicious patterns (like “kyc”, “verify”, “login”, “secure-bank”).
+
+Provide risk score for use in the browser extension alert popup.
+
+🔐 3. Security & Utility Features
+
+Enable CORS for Vercel frontend.
+
+Sanitize inputs and handle errors gracefully.
+
+Implement simple logging (utils/logger.py).
+
+Create /health route returning { "status": "OK" }.
+
+Optional: /stats route returning totals:
+
+{ "wifi_scans": 32, "fraud_detections": 58, "scam_reports": 24, "urls_checked": 19 }
+
+💾 4. Storage
+
+Use scams.json as a lightweight database:
+
+[
+  { "id":1,"message":"Fake bank call","category":"Banking Scam","source":"Call" }
+]
+
+
+Ensure safe read/write handling and file auto-creation.
+
+🧠 5. Optional AI Integration
+
+Add placeholder for AI model file /models/fraud_model.pkl.
+
+Include utility in /utils/ai_utils.py to load model and predict scam probability.
+
+🧪 6. Testing
+
+Add mock test cases for each endpoint.
+
+Return proper status codes:
+
+200 (Success)
+
+400 (Invalid Input)
+
+500 (Server Error)
+
+☁️ 7. Deployment
+
+Create requirements.txt.
+
+Compatible with Render / Railway (port 8080).
+
+Add short README.md describing all routes and deployment steps.
+
+✅ Expected Output
+
+The backend should return clean JSON responses for all these APIs and be fully compatible with the Digital Fortress frontend.
+It should support:
+
+Wi-Defend scans
+
+Fraud detection
+
+Chatbot responses
+
+Scam reporting / database
+
+Browser extension URL protection
