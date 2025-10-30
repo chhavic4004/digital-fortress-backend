@@ -8,7 +8,10 @@ from datetime import datetime
 from utils.logger import log_info, log_error, log_warning
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=[
+    "https://digital-fortress-q6jn.vercel.app",
+    "http://localhost:5173"  # optional: for local testing
+])
 
 SCAMS_FILE = 'scams.json'
 stats = {
